@@ -1,4 +1,5 @@
 build-box.sh
 package.box
 www/*
+!www/.keep
 .vagrant
