@@ -1,0 +1,4 @@
+build-box.sh
+package.box
+www/*
+.vagrant
