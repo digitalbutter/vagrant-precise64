@@ -31,3 +31,13 @@ then
     crontab -u ubuntu /tmp/crontab
 fi
 rm /tmp/crontab
+
+# update some locale env variables
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+locale-gen en_US.UTF-8
+
+# configuration fixes
+sed -i -r 's/(AcceptEnv .*)/#\1/' /etc/ssh/sshd_config
