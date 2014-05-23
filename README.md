@@ -9,7 +9,7 @@ Vagrant configuration for a virtual machine designated for local web development
   * [Maintenance](#maintenance)
   * [Troubleshooting](#troubleshooting)
 * [Known Issues](#known-issues)
-* [Related Links](#related-items)
+* [Related Links](#related-links)
 
 ##Requirements
 * [Vagrant](http://www.vagrantup.com/downloads.html)
