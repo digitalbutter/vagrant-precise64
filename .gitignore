@@ -3,3 +3,4 @@ package.box
 www/*
 !www/.keep
 .vagrant
+init.log
