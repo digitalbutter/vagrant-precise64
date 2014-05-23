@@ -12,10 +12,11 @@ GIT=`which git`
 
 GIT_NAME=`$GIT config --get user.name`
 GIT_EMAIL=`$GIT config --get user.email`
+GIT_BOOTSTRAP="git.sh"
 if [ ! -z "$GIT_NAME" ]
 then
     echo "user.name: $GIT_NAME"
-    read -p "Is this the name associated with your Git account? " -r
+    read -p "Is this the name associated with your Git account? [y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         GIT_NAME=
@@ -30,7 +31,7 @@ fi
 if [ ! -z "$GIT_EMAIL" ]
 then
     echo "user.email $GIT_EMAIL"
-    read -p "Is this the email associated with your Git account? " -r
+    read -p "Is this the email associated with your Git account? [y/N] " -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         GIT_EMAIL=
@@ -41,6 +42,13 @@ then
     read -p "What is the email associated with your Git account? " -r
     GIT_EMAIL=`echo "$REPLY"`
 fi
+
+echo "Writing Git bootstrap script"
+USER_NAME="ubuntu"
+echo "su - $USER_NAME -c \"git config --global user.name '$GIT_NAME'\"" > $GIT_BOOTSTRAP
+echo "su - $USER_NAME -c \"git config --global user.email '$GIT_EMAIL'\"" >> $GIT_BOOTSTRAP
+echo "su - $USER_NAME -c \"git config --global core.autocrlf input\"" >> $GIT_BOOTSTRAP
+echo "su - $USER_NAME -c \"git config --global core.fileMode false\"" >> $GIT_BOOTSTRAP
 
 # Vagrant
 echo

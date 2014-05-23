@@ -47,6 +47,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "file", source: "#{ENV['HOME']}/.ssh", destination: "~"
   config.vm.provision "shell", path: "bootstrap.sh"
+  if File.file?("git.sh")
+    config.vm.provision "shell", path: "git.sh"
+  end
 
   user = ENV['OPSCODE_USER'] || ENV['USER']
   orgname = ENV['OPSCODE_ORGNAME'] || 'butter'

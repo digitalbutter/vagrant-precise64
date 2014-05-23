@@ -1,6 +1,14 @@
+# vagrant box
 build-box.sh
 package.box
+
+# shared folder
 www/*
 !www/.keep
+
+# build
 .vagrant
+
+# autogen
 init.log
+git.sh

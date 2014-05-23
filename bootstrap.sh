@@ -41,3 +41,6 @@ locale-gen en_US.UTF-8
 
 # configuration fixes
 sed -i -r 's/(AcceptEnv .*)/#\1/' /etc/ssh/sshd_config
+
+# ntp
+ntpdate ntp.ubuntu.com
