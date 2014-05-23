@@ -43,6 +43,12 @@ then
     GIT_EMAIL=`echo "$REPLY"`
 fi
 
+echo "Setting host machine Git settings"
+git config --global user.name "$GIT_NAME"
+git config --global user.email "$GIT_EMAIL"
+git config --global core.autocrlf input
+git config --global core.fileMode false
+
 echo "Writing Git bootstrap script"
 USER_NAME="ubuntu"
 echo "su - $USER_NAME -c \"git config --global user.name '$GIT_NAME'\"" > $GIT_BOOTSTRAP
