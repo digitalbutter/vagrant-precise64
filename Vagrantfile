@@ -20,11 +20,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "private_network", ip: "10.0.1.15"
 
   config.vm.hostname = "butter.dev"
-  config.hostsupdater.aliases = [
-    "deacons.butter.dev",
-    "awa.butter.dev",
-    "ptarmigan.butter.dev",
-  ]
 
   f = File.open("aliases", "a+")
   config.hostsupdater.aliases = []
