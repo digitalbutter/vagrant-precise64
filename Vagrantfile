@@ -21,10 +21,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "butter.dev"
   config.hostsupdater.aliases = [
-    "esf.butter.dev",
     "deacons.butter.dev",
-    "tmsfashion.butter.dev",
-    "bkrm.butter.dev"
+    "bkrm.butter.dev",
+    "awa.butter.dev",
+    "ptarmigan.butter.dev",
+    "lab.dev"
   ]
 
   config.vm.synced_folder "", "/vagrant", disabled: true
