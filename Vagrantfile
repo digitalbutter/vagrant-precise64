@@ -20,14 +20,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "private_network", ip: "10.0.1.15"
 
   config.vm.hostname = "butter.dev"
-  config.hostsupdater.aliases = [
-    "esf.butter.dev",
-    "deacons.butter.dev",
-    "tmsfashion.butter.dev",
-    "bkrm.butter.dev"
-  ]
 
-  config.vm.synced_folder "", "/vagrant", disabled: true
+  f = File.open("aliases", "a+")
+  config.hostsupdater.aliases = []
+  f.each_line { |line| 
+    config.hostsupdater.aliases.push line.strip.gsub(/\s+/, " ") + "." + config.vm.hostname
+  }
+
+  config.vm.synced_folder "", "/vagrant", type: "nfs"
   config.vm.synced_folder "www", "/var/www", type: "nfs"
 
   # Provider-specific configuration so you can fine-tune various
