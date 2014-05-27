@@ -52,23 +52,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.provision "shell", path: "git.sh"
   end
 
-  user = ENV['OPSCODE_USER'] || ENV['USER']
-  orgname = ENV['OPSCODE_ORGNAME'] || 'butter'
-  hostname = ENV['OPSCODE_NODE'] || ENV['HOSTNAME'] || Socket::gethostname
-  base_box = ENV['VAGRANT_BOX'] || 'precise64'
-  config.vm.provision "chef_client" do |chef|
-    chef.chef_server_url = "https://api.opscode.com/organizations/#{orgname}"
-    chef.client_key_path = "#{ENV['HOME']}/.chef/#{user}.pem"
-    chef.validation_key_path = "#{ENV['HOME']}/.chef/#{orgname}-validator.pem"
-    chef.validation_client_name = "#{orgname}-validator"
-    chef.chef_server_url = "https://api.opscode.com/organizations/#{orgname}"
+  # user = ENV['OPSCODE_USER'] || ENV['USER']
+  # orgname = ENV['OPSCODE_ORGNAME'] || 'butter'
+  # hostname = ENV['OPSCODE_NODE'] || ENV['HOSTNAME'] || Socket::gethostname
+  # base_box = ENV['VAGRANT_BOX'] || 'precise64'
+  # config.vm.provision "chef_client" do |chef|
+  #   chef.chef_server_url = "https://api.opscode.com/organizations/#{orgname}"
+  #   chef.client_key_path = "#{ENV['HOME']}/.chef/#{user}.pem"
+  #   chef.validation_key_path = "#{ENV['HOME']}/.chef/#{orgname}-validator.pem"
+  #   chef.validation_client_name = "#{orgname}-validator"
+  #   chef.chef_server_url = "https://api.opscode.com/organizations/#{orgname}"
 
-    chef.node_name = "#{user}-#{hostname}-vagrant"
+  #   chef.node_name = "#{user}-#{hostname}-vagrant"
 
-    chef.provisioning_path = "/etc/chef"
-    chef.log_level = :info
-    chef.run_list = [
-      "role[dev]"
-    ]
-  end
+  #   chef.provisioning_path = "/etc/chef"
+  #   chef.log_level = :info
+  #   chef.run_list = [
+  #     "role[dev]"
+  #   ]
+  # end
 end
