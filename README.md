@@ -4,6 +4,7 @@ Vagrant configuration for a virtual machine designated for local web development
 ##Table of Contents
 * [Requirements](#requirements)
 * [Set-up](#set-up)
+  * [Details](#details)
 * [Usage](#usage)
   * [Common](#common)
   * [Maintenance](#maintenance)
@@ -13,24 +14,13 @@ Vagrant configuration for a virtual machine designated for local web development
 
 ##Requirements
 * [Vagrant](http://www.vagrantup.com/downloads.html)
-  * [Vagrant::Hostsupdater plugin](https://github.com/cogitatio/vagrant-hostsupdater)
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads)
-* Opscode Chef user key
-* Opscode Chef organization validation key
 
 ##Set-up
 This Vagrant configuration has only been tested on Mac OS X 10.9.2 and above.
 
 Before continuing, install the requirements listed above.
-
-Ensure the Opscode Chef keys are copied to `~/.chef`.
-
-Create a new environment variable called `OPSCODE_USER` with your username as the value. Append this to your `~/.bash_profile` file.
-
-```
-export OPSCODE_USER="username"
-```
 
 Clone this repository.
 
@@ -39,6 +29,15 @@ $ git clone git@github.com:digitalbutter/vagrant-precise64.git
 ```
 
 You will need to obtain the `package.box` file that contains the initial virtual machine. Copy it to the same path as this file.
+
+Run the `init.sh` script in the root of the working directory.
+
+```
+$ ./init.sh
+```
+
+###Details
+The following items are automated with the `init.sh` script.
 
 Add the box to Vagrant's local box repository.
 
@@ -53,7 +52,7 @@ Install the vagrant-hostsupdater plugin if you haven't already. Please refer [be
 $ vagrant plugin install vagrant-hostsupdater
 ```
 
-Bring up the Vagrant virtual machine. This will initialize the virtual machine, bootstrap it, and provision it using Chef.
+Bring up the Vagrant virtual machine. This will initialize the virtual machine, bootstrap it, and provision it.
 
 ```
 $ vagrant up
@@ -89,7 +88,7 @@ $ ssh ubuntu@10.0.1.15
 The password for the `ubuntu` and `root` accounts is `ubuntu`.
 
 ###Maintenance
-When provisioning rules are updated on Chef (e.g., adding new sites to dev environment) or in the `Vagrantfile`, the machine can be provisioned again:
+When provisioning rules are updated in the `Vagrantfile`, the machine can be provisioned again:
 
 ```
 $ vagrant provision
