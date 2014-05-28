@@ -15,13 +15,13 @@ then
     echo "installing git"
     apt-get install -y git
 fi
-if ! [[ -z $(dpkg --get-selections|sed -nr 's/^(php5)\s+ainstall$/\1/p') ]]
+if ! dpkg-query -W -f '${package}\n' | grep -Fxq php5
 then
     echo "installing php5"
     apt-get install -y php5 php5-cgi php5-curl php5-dev php5-gd
     apachectl restart
 fi
-if ! apachectl -M 2>/dev/null | grep "headers_module"
+if ! apachectl -M 2>/dev/null | grep -q "headers_module"
 then
     apt-get install -y apache2-mpm-itk
     a2enmod headers proxy proxy_http rewrite 
@@ -81,6 +81,7 @@ locale-gen en_US.UTF-8
 
 # configuration fixes
 sed -i -r 's/(AcceptEnv .*)/#\1/' /etc/ssh/sshd_config
+sed -i -r 's/;(date\.timezone =)/\1 Asia\/Hong_Kong/' /etc/php5/apache2/php.ini
 
 # ntp
 ntpdate ntp.ubuntu.com
