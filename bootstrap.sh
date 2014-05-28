@@ -9,6 +9,25 @@ function run {
     su - $USER_NAME -c "$1"
 }
 
+# install web stack
+if ! which git 1>/dev/null
+then
+    echo "installing git"
+    apt-get install -y git
+fi
+if ! [[ -z $(dpkg --get-selections|sed -nr 's/^(php5)\s+ainstall$/\1/p') ]]
+then
+    echo "installing php5"
+    apt-get install -y php5 php5-cgi php5-curl php5-dev php5-gd
+    apachectl restart
+fi
+if ! apachectl -M 2>/dev/null | grep "headers_module"
+then
+    apt-get install -y apache2-mpm-itk
+    a2enmod headers proxy proxy_http rewrite 
+    apachectl restart
+fi
+
 # clone vagrant scripts and symlink
 if [[ ! -d "$USER_HOME/src/vagrant-scripts/.git" ]]
 then
