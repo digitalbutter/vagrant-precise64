@@ -40,21 +40,25 @@ else
 fi
 
 # symlinks to ~/bin
-if [[ ! -L "$USER_HOME/bin/site_up" ]]
+if [[ -L "$USER_HOME/bin/site_up" ]]
 then
-    run 'cd bin && ln -s "../src/vagrant-scripts/site_up.sh" "'$USER_HOME'/bin/site_up"'
+    rm "$USER_HOME/bin/site_up"
 fi
-if [[ ! -L "$USER_HOME/bin/site_down" ]]
+if [[ -L "$USER_HOME/bin/site_down" ]]
 then
-    run 'cd bin && ln -s "../src/vagrant-scripts/site_down.sh" "'$USER_HOME'/bin/site_down"'
+    rm "$USER_HOME/bin/site_down"
 fi
-if [[ ! -L "$USER_HOME/bin/copy_config" ]]
+if [[ -L "$USER_HOME/bin/copy_config" ]]
 then
-    run 'cd bin && ln -s "../src/vagrant-scripts/copy_config.sh" "'$USER_HOME'/bin/copy_config"'
+    rm "$USER_HOME/bin/copy_config"
 fi
-if [[ ! -L "$USER_HOME/bin/dump_database" ]]
+if [[ -L "$USER_HOME/bin/dump_database" ]]
 then
-    run 'cd bin && ln -s "../src/vagrant-scripts/dump_database.sh" "'$USER_HOME'/bin/dump_database"'
+    rm "$USER_HOME/bin/dump_database"
+fi
+if [[ ! -L "$USER_HOME/bin/site" ]]
+then
+    run 'cd bin && ln -s "../src/vagrant-scripts/site.sh" "'$USER_HOME'/bin/site"'
 fi
 if [[ -L "$USER_HOME/bin/vagrant-scripts" ]]
 then
