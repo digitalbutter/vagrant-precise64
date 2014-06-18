@@ -21,6 +21,23 @@ then
     apt-get install -y php5 php5-cgi php5-curl php5-dev php5-gd
     apachectl restart
 fi
+if ! dpkg-query -W -f '${package}\n' | grep -Fxq php-pear
+then
+    echo "installing php5-dev"
+    apt-get install -y php5-dev
+    apachectl restart
+fi
+if ! dpkg-query -W -f '${package}\n' | grep -Fxq php-pear
+then
+    echo "installing php-pear"
+    apt-get install -y php-pear
+    apachectl restart
+fi
+if ! pecl list | grep -q xdebug
+then
+    echo "install xdebug"
+    pecl install xdebug
+fi
 if ! apachectl -M 2>/dev/null | grep -q "headers_module"
 then
     apt-get install -y apache2-mpm-itk
@@ -85,8 +102,17 @@ export LC_CTYPE="en_US.UTF-8"
 locale-gen en_US.UTF-8
 
 # configuration fixes
+PHP_INI="/etc/php5/apache2/php.ini"
 sed -i -r 's/(AcceptEnv .*)/#\1/' /etc/ssh/sshd_config
-sed -i -r 's/;(date\.timezone =)/\1 Asia\/Hong_Kong/' /etc/php5/apache2/php.ini
+sed -i -r 's/;(date\.timezone =)/\1 Asia\/Hong_Kong/' "$PHP_INI"
+sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL | E_STRICT/' "$PHP_INI"
+sed -i -r 's/[;\s]*(display_errors =).*/\1 On/' "$PHP_INI"
+sed -i -r 's/[;\s]*(track_errors =).*/\1 On/' "$PHP_INI"
+sed -i -r 's/[;\s]*(html_errors =).*/\1 On/' "$PHP_INI"
+if ! cat "$PHP_INI" | grep -q xdebug
+then
+    echo 'zend_extension="/usr/lib/php5/20090626/xdebug.so"' >> "$PHP_INI"
+fi
 
 # ntp
 ntpdate ntp.ubuntu.com
