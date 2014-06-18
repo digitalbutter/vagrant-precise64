@@ -38,6 +38,7 @@ else
     echo 'pulling vagrant-scripts.git'
     run ''$GIT' --work-tree="'$USER_HOME'/src/vagrant-scripts" --git-dir="'$USER_HOME'/src/vagrant-scripts/.git" pull'
 fi
+run 'cd "'$USER_HOME'/src/vagrant-scripts" && '$GIT' submodule update --init'
 
 # symlinks to ~/bin
 if [[ -L "$USER_HOME/bin/site_up" ]]
