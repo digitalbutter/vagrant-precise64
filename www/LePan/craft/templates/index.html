@@ -1,0 +1,112 @@
+{#
+ # Homepage template
+ # ---------------
+ #
+ # When this template gets loaded, it will be because someone has accessed
+ # http://yoursite.com/ (without any URI). Craft checks to see if you have
+ # a Single section set to be the Homepage (as you do, by default), and
+ # loads the section’s Template (this file). A special ‘entry’ variable
+ # will already be set for you, assigned to the Homepage entry.
+ #
+ # It's worth noting that even if you didn't have a Homepage Single section,
+ # as long as this template remains at craft/templates/index.html, it
+ # would still be the one to get loaded when accessing http://yoursite.com/,
+ # albeit without an ‘entry’ variable already set for you.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://buildwithcraft.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+
+	{% for block in craft.entries.section('wines').limit().find() %}
+	<article>
+		{% for entry in craft.entries.section('notes').limit().find() %}
+		{% if block.id == entry.wineList %}
+		{% if loop.index == 1 %}
+		<div class="row header-row">
+					<div class="col-md-6">
+						<div class="wine-details">
+							<p>
+								<strong><a href="{{ block.url }}">{{ block.wineName }}</a></strong>, 
+								<strong><a href="">{{ block.vintage }}</a></strong>, 
+								<strong><a href="">{{ block.district }}</a></strong>, 
+								<strong><a href="">{{ block.subRegion }}</a></strong>, 
+								<strong><a href="">{{ block.region }}</a></strong>, 
+								<strong><a href="">{{ block.country }}</a></strong>
+							</p>
+							<img class="star-img" src="{{ globalUrls.starUrl }}">
+							<img class="star-img" src="{{ globalUrls.starUrl }}">
+							<img class="star-img" src="{{ globalUrls.starUrl }}">
+							<img class="star-img" src="{{ globalUrls.starUrl }}">
+							<img class="star-img" src="{{ globalUrls.starUrl }}">
+						</div>
+					</div>
+					<div class="col-md-6 second-col">
+						<div class="wine-details">
+							<p><strong>Color</strong><br> {{ block.color.label }}</p>
+						</div>
+						<div class="wine-details">
+							<p><strong>Style</strong><br> {{ block.style.label }}</p>
+						</div>
+						<div class="wine-details">
+							<p><strong>Grape Variety</strong><br>{{ block.grapeVariety }}</p>
+						</div>
+					</div>
+				</div>
+		{% endif %}
+			<div class="row notes-row">
+				<div class="col-md-6 first-col">
+					<div class="note-details">
+						<span class="note-label">Tasting Date</span>
+						<span class="note-value">{{ entry.tastingDate.format('d F Y') }}</span>
+					</div>
+					<div class="note-details">
+						<span class="note-label">Tasting Place</span>
+						<span class="note-value">{{ entry.tastingPlace }}</span>
+					</div>
+					{% if entry.maturity %}
+					<div class="note-details">
+						<span class="note-label">Maturity</span>
+						<span class="note-value">{{ entry.maturity }}</span>
+					</div>
+					{% endif %}
+				</div>
+				<div class="col-md-6 second-col">
+					{% if entry.publication %}
+					<div class="note-details">
+						<span class="note-label">Publication</span>
+						<span class="note-value">{{ entry.publication }}</span>
+					</div>
+					{% endif %}
+					<div class="note-details">
+						<span class="note-label">Author</span>
+						<span class="note-value">{{ entry.author }}</span>
+					</div>
+					<div class="note-details">
+						<span class="note-label">Rating</span>
+						<span class="note-value">{{ entry.rating}}</span>
+					</div>
+					{% if entry.price %}
+					<div class="note-details">
+						<span class="note-label">Average Price</span>
+						<span class="note-value">{{ entry.price }}</span>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="row notes-inner-row">
+				<div class="note-details comments">
+					<div class="note-select col-md-1"><input type="checkbox" value="select" name="noteSelect" ></div>
+					<div class="note-comment col-md-11">{{ entry.conclusion }}</div>
+				</div>
+			</div>
+			{% endif %}
+		{% endfor %}
+	</article>
+	{% endfor %}
+
+
+{% endblock %}

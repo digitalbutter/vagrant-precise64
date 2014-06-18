@@ -1,0 +1,101 @@
+{#
+ # News entry template
+ # -------------------
+ #
+ # This template gets loaded whenever a News entry’s URL is
+ # requested. That’s because the News section’s Template setting is
+ # set to “news/_entry”, the path to this template.
+ #
+ # When this template is loaded, it will already have an ‘entry’
+ # variable, set to the requested News entry.
+ #
+ # See this page for more details on how Craft routes requests:
+ # http://buildwithcraft.com/docs/routing
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+	<article>
+		<div class="row header-row">
+			{% for block in craft.entries.section('wines').limit(5).find() %}
+				{% if block.id == entry.wineList %}
+				<div class="col-md-6">
+					<div class="wine-details">
+						<p>
+						<strong><a href="{{ block.url }}">{{ block.wineName }}</a></strong>, 
+						<strong><a href="">{{ block.vintage }}</a></strong>, 
+						<strong><a href="">{{ block.district }}</a></strong>, 
+						<strong><a href="">{{ block.subRegion }}</a></strong>, 
+						<strong><a href="">{{ block.region }}</a></strong>, 
+						<strong><a href="">{{ block.country }}</a></strong>
+					</p>
+					<img class="star-img" src="{{ globalUrls.starUrl }}">
+					<img class="star-img" src="{{ globalUrls.starUrl }}">
+					<img class="star-img" src="{{ globalUrls.starUrl }}">
+					<img class="star-img" src="{{ globalUrls.starUrl }}">
+					<img class="star-img" src="{{ globalUrls.starUrl }}">
+					</div>
+				</div>
+				<div class="col-md-6 second-col">
+					<div class="wine-details">
+						<p><strong>Color</strong><br> {{ block.color.label }}</p>
+					</div>
+					<div class="wine-details">
+						<p><strong>Style</strong><br> {{ block.style.label }}</p>
+					</div>
+					<div class="wine-details">
+						<p><strong>Grape Variety</strong><br>{{ block.grapeVariety }}</p>
+					</div>
+				</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+			<div class="row notes-row">
+						<div class="col-md-6 first-col">
+							<div class="note-details">
+								<span class="note-label">Tasting Date</span>
+								<span class="note-value">{{ entry.tastingDate.format('d F Y') }}</span>
+							</div>
+							<div class="note-details">
+								<span class="note-label">Tasting Place</span>
+								<span class="note-value">{{ entry.tastingPlace }}</span>
+							</div>
+							{% if entry.maturity %}
+							<div class="note-details">
+								<span class="note-label">Maturity</span>
+								<span class="note-value">{{ entry.maturity }}</span>
+							</div>
+							{% endif %}
+						</div>
+						<div class="col-md-6 second-col">
+							{% if entry.publication %}
+							<div class="note-details">
+								<span class="note-label">Publication</span>
+								<span class="note-value">{{ entry.publication }}</span>
+							</div>
+							{% endif %}
+							<div class="note-details">
+								<span class="note-label">Author</span>
+								<span class="note-value">{{ entry.author }}</span>
+							</div>
+							<div class="note-details">
+								<span class="note-label">Rating</span>
+								<span class="note-value">{{ entry.rating}}</span>
+							</div>
+							{% if entry.price %}
+							<div class="note-details">
+								<span class="note-label">Average Price</span>
+								<span class="note-value">{{ entry.price }}</span>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="row notes-inner-row">
+						<div class="note-details comments">
+							<div class="note-select col-md-1"><input type="checkbox" value="select" name="noteSelect" ></div>
+							<div class="note-comment col-md-11">{{ entry.conclusion }}</div>
+						</div>
+					</div>
+	</article>
+{% endblock %}

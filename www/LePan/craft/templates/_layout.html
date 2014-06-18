@@ -1,0 +1,53 @@
+{#
+ # Layout template
+ # ---------------
+ #
+ # This template defines your site’s global layout. It can be
+ # “extended” by other templates to fill in the gaps.
+ #
+ # See Twig’s Template Inheritance documentation for more details:
+ # http://twig.sensiolabs.org/doc/templates.html#template-inheritance
+ #}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+	<title>{% if title is defined %}{{ title }} - {% endif %}</title>
+	<link rel="home" href="{{ siteUrl }}" />
+
+	<link href="{{ siteUrl }}/css/lepan.css" rel="stylesheet">
+
+	<!-- Bootstrap -->
+    <link href="{{ siteUrl }}/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<div id="container" class="container">
+		<header id="header">
+			<h1><a href="{{ siteUrl }}">{{ siteName }}</a></h1>
+		</header>
+
+		<main id="content" role="main" class="container">
+			{% block content %}
+				<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+				<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+			{% endblock %}
+		</main>
+
+		<footer id="footer">
+			Copyright {{ now.year }} LePan. All rights reserved.
+		</footer>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ siteUrl }}/js/bootstrap.min.js"></script>
+
+    {% block javascript %}
+
+    {% endblock %}
+</body>
+</html>
