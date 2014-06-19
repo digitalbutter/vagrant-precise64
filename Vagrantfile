@@ -24,7 +24,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     "esf.butter.dev",
     "deacons.butter.dev",
     "tmsfashion.butter.dev",
-    "bkrm.butter.dev"
+    "bkrm.butter.dev",
+"lpw.butter.dev"
   ]
 
   config.vm.synced_folder "", "/vagrant", disabled: true
