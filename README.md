@@ -12,6 +12,7 @@ Vagrant configuration for a virtual machine designated for local web development
 * [Known Issues](#known-issues)
   * [vagrant-hostsupdater](#vagrant-hostsupdater)
   * [Sublime Text 2](#sublime-text-2)
+  * [MODx Mirror Plugin](#modx-mirror-plugin)
 * [Related Links](#related-links)
 
 ##Requirements
@@ -167,6 +168,9 @@ There appear to be several potential solutions/workarounds for this problem:
 
 ###Sublime Text 2
 There is a bug with Sublime that causes the NFS shared path to become out of sync discussed [here](https://serverfault.com/questions/534507/vagrant-nfs-share-doesnt-show-updated-file-if-size-doesnt-change)
+
+###MODx Mirror Plugin
+The old mirror plugin does not add an EOF newline to the files it creates. An updated version of the plugin is available [here](https://github.com/digitalbutter/MODX-Mirror/releases)
 
 ##Related Links
 * [digitalbutter/vagrant-scripts](https://github.com/digitalbutter/vagrant-scripts)
