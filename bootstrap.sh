@@ -111,6 +111,7 @@ sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL | E_STRICT/' "$PHP_INI"
 sed -i -r 's/[;\s]*(display_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(track_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(html_errors =).*/\1 On/' "$PHP_INI"
+sed -i -r 's/[;\s]*(max_execution_time =).*/\1 60/' "$PHP_INI"
 # xdebug
 sed -i -r '/zend_extension=\".+\/xdebug.so\"/d' "$PHP_INI"
 if ! cat "$PHP_INI" | grep -q xdebug
