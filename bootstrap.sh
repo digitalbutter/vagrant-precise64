@@ -1,8 +1,10 @@
 #!/bin/bash
+set -o nounset
+set -o errexit
 
 USER_NAME="ubuntu"
 USER_HOME="/home/ubuntu"
-GIT=`which git`
+GIT=$(which git)
 
 function run {
     echo $1
@@ -109,9 +111,13 @@ sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL | E_STRICT/' "$PHP_INI"
 sed -i -r 's/[;\s]*(display_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(track_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(html_errors =).*/\1 On/' "$PHP_INI"
+# xdebug
+sed -i -r '/zend_extension=\".+\/xdebug.so\"/d' "$PHP_INI"
 if ! cat "$PHP_INI" | grep -q xdebug
 then
-    echo 'zend_extension="/usr/lib/php5/20090626/xdebug.so"' >> "$PHP_INI"
+    PHP_LIB="/usr/lib/php5"
+    XDEBUG_DIR=$(ls "$PHP_LIB" | sed -nr 's/([0-9]{4}[0-9]{2}[0-9]{2})/\1/p')
+    echo 'zend_extension="'$PHP_LIB'/'$(echo "$XDEBUG_DIR")'/xdebug.so"' >> "$PHP_INI"
 fi
 
 # ntp
