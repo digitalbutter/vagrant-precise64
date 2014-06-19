@@ -1,38 +1,11 @@
 #!/bin/bash
+set -o nounset
+set -o errexit
 
 LOG="init.log"
 echo >> $LOG
 echo "======" >> $LOG
 date >> $LOG
-
-# Opscode
-echo -e "\033[32mSetting Opscode Chef preferences\033[0m"
-
-if [ ! -z "$OPSCODE_USER" ]
-then
-    echo "OPSCODE_USER: $OPSCODE_USER"
-    read -p "Is this the username associated with your Opscode account? [y/N] " -r
-    if [[ ! $REPLY =~ ^[Yy]$ ]]
-    then
-        OPSCODE_USER=
-    fi
-fi
-if [ -z "$OPSCODE_USER" ]
-then
-    read -p "What is your Opscode username? " -r
-    OPSCODE_USER=`echo "$REPLY"`
-fi
-
-echo "Setting OPSCODE_USER environment variable"
-BASH_FILES=("$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.profile")
-for i in "${BASH_FILES[@]}"
-do
-    if cat "$i" 2>/dev/null | grep -q "export OPSCODE_USER"
-    then
-        sed -i -e '/export OPSCODE_USER/d' "$i"
-    fi
-done
-echo "export OPSCODE_USER=\"$OPSCODE_USER\"" >> ~/.bash_profile
 
 # Git
 echo
