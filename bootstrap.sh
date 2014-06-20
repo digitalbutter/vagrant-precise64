@@ -107,7 +107,7 @@ locale-gen en_US.UTF-8
 PHP_INI="/etc/php5/apache2/php.ini"
 sed -i -r 's/(AcceptEnv .*)/#\1/' /etc/ssh/sshd_config
 sed -i -r 's/;(date\.timezone =)/\1 Asia\/Hong_Kong/' "$PHP_INI"
-sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL | E_STRICT/' "$PHP_INI"
+sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL & ~E_DEPRECATED | E_NOTICE/' "$PHP_INI"
 sed -i -r 's/[;\s]*(display_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(track_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(html_errors =).*/\1 On/' "$PHP_INI"
