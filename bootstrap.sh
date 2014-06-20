@@ -107,12 +107,13 @@ locale-gen en_US.UTF-8
 PHP_INI="/etc/php5/apache2/php.ini"
 sed -i -r 's/(AcceptEnv .*)/#\1/' /etc/ssh/sshd_config
 sed -i -r 's/;(date\.timezone =)/\1 Asia\/Hong_Kong/' "$PHP_INI"
-sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL & ~E_DEPRECATED | E_NOTICE/' "$PHP_INI"
+sed -i -r 's/[;\s]*(error_reporting =).*/\1 E_ALL \& \~E_DEPRECATED \| E_NOTICE/' "$PHP_INI"
 sed -i -r 's/[;\s]*(display_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(track_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(html_errors =).*/\1 On/' "$PHP_INI"
 sed -i -r 's/[;\s]*(max_execution_time =).*/\1 60/' "$PHP_INI"
 # xdebug
+sed -i -r '/^xdebug\..+/d' "$PHP_INI"
 sed -i -r '/zend_extension=\".+\/xdebug.so\"/d' "$PHP_INI"
 if ! cat "$PHP_INI" | grep -q xdebug
 then
@@ -120,6 +121,9 @@ then
     XDEBUG_DIR=$(ls "$PHP_LIB" | sed -nr 's/([0-9]{4}[0-9]{2}[0-9]{2})/\1/p')
     echo 'zend_extension="'$PHP_LIB'/'$(echo "$XDEBUG_DIR")'/xdebug.so"' >> "$PHP_INI"
 fi
+echo 'xdebug.var_display_max_data=-1' >> "$PHP_INI"
+
+apachectl restart
 
 # ntp
 ntpdate ntp.ubuntu.com
