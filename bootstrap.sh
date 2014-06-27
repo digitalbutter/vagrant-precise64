@@ -47,6 +47,12 @@ then
     apachectl restart
 fi
 
+# missing user
+if ! id -u butter &>/dev/null
+then
+    adduser --shell /bin/false --gecos "" --disabled-password butter
+fi
+
 # clone vagrant scripts and symlink
 if [[ ! -d "$USER_HOME/src/vagrant-scripts/.git" ]]
 then
