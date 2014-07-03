@@ -51,6 +51,7 @@ git config --global user.name "$GIT_NAME"
 git config --global user.email "$GIT_EMAIL"
 git config --global core.autocrlf input
 git config --global core.fileMode false
+git config --global core.ignorecase false
 
 echo "Writing Git bootstrap script"
 USER_NAME="ubuntu"
@@ -58,6 +59,7 @@ echo "su - $USER_NAME -c \"git config --global user.name '$GIT_NAME'\"" > $GIT_B
 echo "su - $USER_NAME -c \"git config --global user.email '$GIT_EMAIL'\"" >> $GIT_BOOTSTRAP
 echo "su - $USER_NAME -c \"git config --global core.autocrlf input\"" >> $GIT_BOOTSTRAP
 echo "su - $USER_NAME -c \"git config --global core.fileMode false\"" >> $GIT_BOOTSTRAP
+echo "su - $USER_NAME -c \"git config --global core.ignorecase false\"" >> $GIT_BOOTSTRAP
 
 # Vagrant
 echo
