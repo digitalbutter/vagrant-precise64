@@ -93,6 +93,12 @@ fi
 
 # set up crontab for self updating
 echo 'check crontab'
+if ! crontab -u $USER_NAME -l
+then
+    echo '' > /tmp/blankcrontab
+    crontab -u ubuntu /tmp/blankcrontab
+    rm /tmp/blankcrontab
+fi
 crontab -u $USER_NAME -l > /tmp/crontab
 if ! grep -q "vagrant-scripts/update_self" /tmp/crontab
 then
