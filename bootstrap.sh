@@ -100,10 +100,15 @@ then
     rm /tmp/blankcrontab
 fi
 crontab -u $USER_NAME -l > /tmp/crontab
-if ! grep -q "vagrant-scripts/update_self" /tmp/crontab
+if grep -q "vagrant-scripts/update_self" /tmp/crontab
+then
+    sed -i -r '/update_self\.sh/d' /tmp/crontab
+fi
+if ! grep -q "bin/update_scripts" /tmp/crontab
 then
     echo 'update crontab'
-    echo "0 12 * * * $USER_HOME/bin/vagrant-scripts/update_self.sh" >> /tmp/crontab
+    run 'cd bin && ln -s "../src/vagrant-scripts/update_self.sh" "'$USER_HOME'/bin/update_scripts"'
+    echo "0 12 * * * $USER_HOME/bin/update_scripts" >> /tmp/crontab
     crontab -u ubuntu /tmp/crontab
 fi
 rm /tmp/crontab
@@ -134,6 +139,7 @@ then
     echo 'zend_extension="'$PHP_LIB'/'$(echo "$XDEBUG_DIR")'/xdebug.so"' >> "$PHP_INI"
 fi
 echo 'xdebug.var_display_max_data=-1' >> "$PHP_INI"
+echo 'xdebug.var_display_max_depth=-1' >> "$PHP_INI"
 
 apachectl restart
 
