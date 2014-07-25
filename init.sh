@@ -75,7 +75,7 @@ else
     echo "Vagrant box exists already"
 fi
 
-VAGRANT_HOSTSUPDATER_NAME="vagrant-hostsupdater"
+VAGRANT_HOSTSUPDATER="vagrant-hostsupdater"
 if ! vagrant plugin list | grep -q "$VAGRANT_HOSTSUPDATER"
 then
     echo "Installing plugin..."
