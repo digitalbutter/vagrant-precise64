@@ -111,6 +111,12 @@ then
     echo "0 12 * * * $USER_HOME/bin/update_scripts" >> /tmp/crontab
     crontab -u ubuntu /tmp/crontab
 fi
+if ! grep -q "ntpdate" /tmp/crontab
+then
+    echo 'ntpdate crontab'
+    echo "*/10 * * * * sudo ntpdate ntp.ubuntu.com" >> /tmp/crontab
+    crontab -u ubuntu /tmp/crontab
+fi
 rm /tmp/crontab
 
 # update some locale env variables
