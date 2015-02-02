@@ -57,8 +57,8 @@ fi
 if [[ ! -d "$USER_HOME/src/vagrant-scripts/.git" ]]
 then
     echo 'cloning vagrant-scripts.git'
-    run 'mkdir "'$USER_HOME'/bin" "'$USER_HOME'/src"'
-    run ''$GIT' clone https://github.com/digitalbutter/vagrant-scripts.git "'$USER_HOME'/src/vagrant-scripts"'
+    run 'mkdir -p "'$USER_HOME'/bin" "'$USER_HOME'/src"'
+    run ''$GIT' clone git@github.com:digitalbutter/vagrant-scripts.git "'$USER_HOME'/src/vagrant-scripts"'
 else
     echo 'pulling vagrant-scripts.git'
     run ''$GIT' --work-tree="'$USER_HOME'/src/vagrant-scripts" --git-dir="'$USER_HOME'/src/vagrant-scripts/.git" pull'

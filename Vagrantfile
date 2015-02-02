@@ -35,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "www", "/var/www", type: "nfs"
 
   config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
     v.cpus = 2
     v.memory = 1024
   end
