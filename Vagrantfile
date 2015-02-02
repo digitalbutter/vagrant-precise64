@@ -2,6 +2,9 @@
 # vi: set ft=ruby :
 
 require "socket"
+require "logger"
+
+log = Logger.new(STDOUT);
 
 unless Vagrant.has_plugin?("vagrant-hostsupdater")
   raise 'vagrant-hostsupdater is not installed'
@@ -10,6 +13,7 @@ end
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+root = File.dirname(__FILE__)
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu-server-12.04.4"
   config.vm.box_check_update = false
@@ -21,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "butter.dev"
 
-  f = File.open("aliases", "a+")
+  f = File.open(root + "/aliases", "a+")
   config.hostsupdater.aliases = []
   f.each_line { |line| 
     config.hostsupdater.aliases.push line.strip.gsub(/\s+/, " ") + "." + config.vm.hostname
@@ -32,6 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.cpus = 2
+    v.memory = 1024
   end
 
   config.vm.provision "file", source: "#{ENV['HOME']}/.ssh", destination: "~"
